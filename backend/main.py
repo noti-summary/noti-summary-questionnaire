@@ -2,12 +2,11 @@ from fastapi import FastAPI
 import uvicorn
 import strawberry
 from strawberry.fastapi import GraphQLRouter
-from strawberry.schema.config import StrawberryConfig
 
 from resolver import Query, Mutation
 
 
-schema = strawberry.Schema(query=Query, mutation=Mutation, config=StrawberryConfig(auto_camel_case=False))
+schema = strawberry.Schema(query=Query, mutation=Mutation)
 graphql_app = GraphQLRouter(schema)
 
 app = FastAPI()

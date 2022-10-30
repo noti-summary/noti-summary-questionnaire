@@ -7,10 +7,10 @@ from firestore_db import db
 
 @strawberry.type
 class Notification:
-    user_id: str
-    notification_id: str
-    time: str
-    app_name: str
+    userId: str
+    notificationId: str
+    postTime: str
+    appName: str
     title: str
     content: str
     category: str
@@ -23,20 +23,21 @@ class Context:
 
 @strawberry.type
 class Summary:
-    user_id: str
-    summary_id: str
-    start_time: str
-    end_time: str
+    userId: str
+    summaryId: str
+    startTime: str
+    endTime: str
+    submitTime: str
     notification: List[str]
     context: Context
     summary: str
     reason: str
 
     @strawberry.field
-    def notification_info(self) -> List[Notification]:
+    def notificationInfo(self) -> List[Notification]:
         res = []
         for nid in self.notification:
-            doc = db.collection(u'notification').document(f'{self.user_id}_{nid}').get()
+            doc = db.collection(u'notification').document(f'{self.userId}_{nid}').get()
             if doc.exists:
                 res.append(Notification(**doc.to_dict()))
         return res
