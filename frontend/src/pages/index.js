@@ -22,9 +22,10 @@ export default function Home() {
         </p> */}
 
         <Noticard
-          title="Lab"
-          time="22:30"
-          content="A: hello world" />
+          appName="Messenger"
+          time="?分鐘前"
+          title="A"
+          content="hello world" />
 
         <div className={styles.grid}>
           <a href="https://nextjs.org/docs" className={styles.card}>
