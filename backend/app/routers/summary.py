@@ -8,7 +8,7 @@ summary_router = APIRouter()
 
 
 @summary_router.get("/{userId}/{summaryId}", response_model=Summary)
-async def getSummary(userId: str, summaryId: str) -> Summary:
+async def get_summary(userId: str, summaryId: str) -> Summary:
     doc = db.collection(u'summary').document(f'{userId}_{summaryId}').get()
     doc = doc.to_dict()
 
@@ -22,8 +22,15 @@ async def getSummary(userId: str, summaryId: str) -> Summary:
     return doc
 
 
+@summary_router.get("/undone/{userId}")
+async def get_undone_summary_id(userId: str) -> list[str]:
+    docs = db.collection(u'summary').where(u'userId', u'==', userId).where(u'summary', u'==', u'').stream()
+    ids = [doc.to_dict()["summaryId"] for doc in docs]
+    return ids
+
+
 @summary_router.post("/{userId}/{summaryId}")
-async def updateSummary(userId: str, summaryId: str, input: Questionnaire) -> Questionnaire:
+async def update_summary(userId: str, summaryId: str, input: Questionnaire) -> Questionnaire:
     doc_ref = db.collection(u'summary').document(f'{userId}_{summaryId}')
     doc_ref.update({u'summary': input.summary})
     return input
