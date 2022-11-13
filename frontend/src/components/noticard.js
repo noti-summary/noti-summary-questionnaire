@@ -1,5 +1,3 @@
-import styles from '../styles/Home.module.css'
-
 function Noticard(props) {
     return (
         <div class="flex flex-col w-80 bg-slate-800 rounded-lg">

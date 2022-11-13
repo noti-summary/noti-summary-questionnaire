@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import Noticard from '../components/noticard.js'
+import Notilist from '../components/notilist'
 
 export default function Home() {
   return (
@@ -21,11 +22,12 @@ export default function Home() {
           <code className={styles.code}>pages/index.js</code>
         </p> */}
 
-        <Noticard
+        {/* <Noticard
           appName="Messenger"
           time="?分鐘前"
           title="A"
-          content="hello world" />
+          content="hello world" /> */}
+        <Notilist/>
 
         <div className={styles.grid}>
           <a href="https://nextjs.org/docs" className={styles.card}>
