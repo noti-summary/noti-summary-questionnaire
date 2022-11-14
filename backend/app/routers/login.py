@@ -1,4 +1,4 @@
-from fastapi import APIRouter, WebSocket, WebSocketDisconnect
+from fastapi import APIRouter, Body, WebSocket, WebSocketDisconnect
 import uuid
 
 
@@ -40,10 +40,10 @@ async def websocket_endpoint(websocket: WebSocket) -> None:
         manager.disconnect(websocket)
 
 
-@login_router.post("/{userId}/{access_token}")
-async def login_to_web(userId: str, access_token: str) -> bool:
+@login_router.post("/{userId}")
+async def login_to_web(userId: str, accessToken: str = Body()) -> bool:
     for ws, token in manager.active_connections.items():
-        if token == access_token:
+        if token == accessToken:
             await manager.send_direct_message(f'{userId} logged in successfully', ws)
             return True
 
