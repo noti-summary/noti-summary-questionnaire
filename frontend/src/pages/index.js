@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import Link from 'next/link';
 import styles from '../styles/Home.module.css'
 import Noticard from '../components/noticard.js'
 import Notilist from '../components/notilist'
@@ -28,6 +29,11 @@ export default function Home() {
           title="A"
           content="hello world" /> */}
         <Notilist/>
+        
+        <Link href="/login" passHref>
+          <button>登入</button>
+        </Link>
+        
 
         <div className={styles.grid}>
           <a href="https://nextjs.org/docs" className={styles.card}>
