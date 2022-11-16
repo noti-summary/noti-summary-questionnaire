@@ -13,12 +13,8 @@ class ConnectionManager:
     def disconnect(self, websocket: WebSocket):
         del self.active_connections[websocket]
 
-    async def send_direct_message(self, message: str, websocket: WebSocket):
-        await websocket.send_text(message)
-
-    async def broadcast(self, message: str):
-        for ws in self.active_connections.keys():
-            await ws.send_text(message)
+    async def send_direct_message(self, type: str, message: str, websocket: WebSocket):
+        await websocket.send_json({"type": type, "message": message})
 
 
 manager = ConnectionManager()
@@ -34,7 +30,7 @@ async def websocket_endpoint(websocket: WebSocket) -> None:
     try:
         while True:
             data = await websocket.receive_text()
-            await manager.send_direct_message(manager.active_connections.get(websocket), websocket)
+            await manager.send_direct_message("token", manager.active_connections.get(websocket), websocket)
             
     except WebSocketDisconnect:
         manager.disconnect(websocket)
@@ -44,7 +40,7 @@ async def websocket_endpoint(websocket: WebSocket) -> None:
 async def login_to_web(userId: str, accessToken: str = Body()) -> bool:
     for ws, token in manager.active_connections.items():
         if token == accessToken:
-            await manager.send_direct_message(f'{userId} logged in successfully', ws)
+            await manager.send_direct_message("login", f'{userId} logged in successfully', ws)
             return True
 
     return False
