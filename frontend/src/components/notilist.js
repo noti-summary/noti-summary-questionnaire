@@ -37,7 +37,7 @@ function Notilist() {
     
     return (
         <div>
-            {testData.map(noti => <Noticard {...noti} />)}
+            {testData.map(noti => <Noticard {...noti} key={noti.notificationId}/>)}
         </div>
     );
 }
