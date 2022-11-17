@@ -4,6 +4,8 @@ import Link from 'next/link';
 import styles from '../styles/Home.module.css'
 import Noticard from '../components/noticard.js'
 import Notilist from '../components/notilist'
+import Likert from '../components/likert'
+import Quest from '../components/questionnaire';
 
 export default function Home() {
   return (
@@ -22,29 +24,24 @@ export default function Home() {
           Get started by editing{' '}
           <code className={styles.code}>pages/index.js</code>
         </p> */}
-
-        {/* <Noticard
-          appName="Messenger"
-          time="?分鐘前"
-          title="A"
-          content="hello world" /> */}
-        <Notilist/>
         
         <Link href="/login" passHref>
           <button>登入</button>
         </Link>
-        
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
+        <div className="grid gap-x-96 grid-cols-2">
+          <Notilist/>
+          <Quest/>
+          {/* <a href="https://nextjs.org/docs" className={styles.card}>
             <h2>Documentation &rarr;</h2>
             <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+          </a> */}
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
+          {/* <a href="https://nextjs.org/learn" className={styles.card}>
             <h2>Learn &rarr;</h2>
             <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
+          </a> */}
+          
 
           {/* <a
             href="https://github.com/vercel/next.js/tree/canary/examples"
