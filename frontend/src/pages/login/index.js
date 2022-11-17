@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import styles from '../../styles/Home.module.css';
 import QRCode from '../../components/qrcode';
+import SummaryList from '../../components/summaryList';
 
 
-export default function login() {
+export default function Login() {
 
     const [accessToken, setAccessToken] = useState("");
     const [loggedIn, setLoggedIn] = useState(false);
+    const [userId, setUserId] = useState("");
 
     useEffect(() => {
         const ws = new WebSocket(process.env.NEXT_PUBLIC_WS_URL);
@@ -23,11 +25,15 @@ export default function login() {
             }
             else if(receive.type == "login"){ 
                 setLoggedIn(true);
-                console.log(`userId = ${receive.message.slice(0, 3)}`);
+                setUserId(receive.message.slice(0, 3));
             }
         };
 
-        return () => ws.close();
+        return () => {
+            if(ws.readyState === 1){ 
+                ws.close();
+            }
+        }
 
     }, []);
 
@@ -35,7 +41,7 @@ export default function login() {
     return(
         <div className={styles.container}>
             {loggedIn
-              ? <h3>登入成功</h3>
+              ? <SummaryList userId={userId}/>
               : <QRCode token={accessToken} />
             }
         </div>
