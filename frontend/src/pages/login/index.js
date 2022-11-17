@@ -9,8 +9,7 @@ export default function login() {
     const [loggedIn, setLoggedIn] = useState(false);
 
     useEffect(() => {
-        const ws_url = "ws://localhost:5000/login/ws";
-        const ws = new WebSocket(ws_url);
+        const ws = new WebSocket(process.env.NEXT_PUBLIC_WS_URL);
 
         ws.onopen = () => {
             ws.send("connecting");
@@ -18,6 +17,7 @@ export default function login() {
 
         ws.onmessage = (event) => {
             const receive = JSON.parse(event.data);
+
             if(receive.type == "token"){
                 setAccessToken(receive.message);
             }
