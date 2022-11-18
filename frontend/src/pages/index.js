@@ -6,6 +6,7 @@ import Noticard from '../components/noticard.js'
 import Notilist from '../components/notilist'
 import Likert from '../components/likert'
 import Quest from '../components/questionnaire';
+import SummaryList from '../components/summaryList';
 
 export default function Home() {
   return (
@@ -28,6 +29,8 @@ export default function Home() {
         <Link href="/login" passHref>
           <button>登入</button>
         </Link>
+
+        <SummaryList userId={"001"}/>
 
         <div className="grid gap-x-96 grid-cols-2">
           <Notilist/>
