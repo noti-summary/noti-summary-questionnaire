@@ -1,5 +1,5 @@
 import axios from 'axios';
-import Noticard from './noticard';
+import NotiCard from './notiCard';
 import React, { useState, useEffect } from 'react';
 
 const dataURL = "http://0.0.0.0:8000/summary/000/123";
@@ -25,7 +25,7 @@ const testData = [
     }
 ];
 
-function Notilist() {
+function NotiList() {
     // const [notiData, setNoti] = useState(null);
     // useEffect(() => {
     //     axios.get(dataURL).then((res) => {
@@ -37,9 +37,9 @@ function Notilist() {
     
     return (
         <div>
-            {testData.map(noti => <Noticard {...noti} key={noti.notificationId}/>)}
+            {testData.map(noti => <NotiCard {...noti} key={noti.notificationId}/>)}
         </div>
     );
 }
 
-export default Notilist;
+export default NotiList;
