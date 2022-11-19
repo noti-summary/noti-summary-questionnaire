@@ -28,7 +28,7 @@ export default function SummaryList({userId}) {
 
             <List>
                 {summaryIds.map((sid) => (
-                    <Link  key={sid} href={`/${userId}/${sid}`} passHref>
+                    <Link key={sid} href={`/${userId}/${sid}`} passHref>
                         <ListItemButton> 
                             <ListItemIcon>
                                 <SummarizeIcon color="primary" fontSize="large"/>

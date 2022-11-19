@@ -14,6 +14,8 @@ export default function Questionnaire() {
     const dataURL = `http://0.0.0.0:5000/summary/${userId}/${summaryId}`;
     
     useEffect(() => {
+        if(!router.isReady) return;
+
         axios.get(dataURL).then((res) => {
             setNoti(res['data']['notification']);
             setSum(res['data']);
