@@ -4,19 +4,16 @@ import React, { useState, useEffect } from 'react';
 import NotiList from '../../../components/notiList';
 import Quest from '../../../components/questionnaire';
 
+
 export default function Questionnaire() {
 
     const router = useRouter();
     const {userId, summaryId} = router.query
-
-    
-
     const [notiData, setNoti] = useState(null);
     const [summary, setSum] = useState(null);
+    const dataURL = `http://0.0.0.0:5000/summary/${userId}/${summaryId}`;
     
     useEffect(() => {
-        const dataURL = `http://0.0.0.0:8000/summary/001/123`; // unable to use userId & summaryId directly
-        console.log(dataURL);
         axios.get(dataURL).then((res) => {
             setNoti(res['data']['notification']);
             setSum(res['data']);

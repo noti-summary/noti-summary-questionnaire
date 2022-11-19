@@ -1,5 +1,10 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link'
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import SummarizeIcon from '@mui/icons-material/Summarize';
 import axios from 'axios';
 import Toast from './toast.js';
 
@@ -19,16 +24,20 @@ export default function SummaryList({userId}) {
     return(
         <div>
             <Toast />
-            <h2>{userId} 待填摘要問卷</h2>
-    
-            {summaryIds.map((sid) => {
-                return (
-                    <div key={sid}>
-                        <Link href={`/${userId}/${sid}`}> Go to pages /{userId}/{sid} </Link>
-                        <br />
-                    </div>
-                )
-            })}
+            <h2>待完成摘要問卷</h2>
+
+            <List>
+                {summaryIds.map((sid) => (
+                    <Link  key={sid} href={`/${userId}/${sid}`} passHref>
+                        <ListItemButton> 
+                            <ListItemIcon>
+                                <SummarizeIcon color="primary" fontSize="large"/>
+                            </ListItemIcon>
+                            <ListItemText primary={`Go to questionnaire /${userId}/${sid}`} />
+                        </ListItemButton>
+                    </Link>
+                ))}
+            </List>
             
         </div>
 

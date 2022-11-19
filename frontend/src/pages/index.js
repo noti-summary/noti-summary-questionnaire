@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link';
+import Button from '@mui/material/Button';
 import styles from '../styles/Home.module.css'
 import SummaryList from '../components/summaryList';
 
@@ -18,10 +19,9 @@ export default function Home() {
         </h1>
         
         <Link href="/login" passHref>
-          <button>登入</button>
+          <Button variant="contained" size="large">登入</Button>
         </Link>
 
-        <SummaryList userId={"001"}/>
       </main>
 
       <footer className={styles.footer}>
