@@ -24,7 +24,7 @@ services:
                 aliases:
                     - backend_server
         ports:
-            - 5000:5000
+            - 5001:5001
         environment:
             type: ${type}
             project_id: ${project_id}
