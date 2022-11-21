@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { useRouter } from "next/router";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AuthContext } from '../../components/context/authContext';
 import QRCode from '../../components/qrcode';
@@ -27,7 +27,7 @@ export default function Login() {
                 setAccessToken(receive.message);
             }
             else if(receive.type === "login"){
-                context.setUser({userId: receive.message.slice(0, 3)});
+                context.setUser(receive.message.slice(0, 3));
 
                 toast.success('登入成功', {
                     toastId: "login_success",
@@ -39,11 +39,13 @@ export default function Login() {
                     draggable: false,
                     progress: undefined,
                     theme: "dark",
+                    onClose: () => {
+                        setTimeout(() => {
+                            ws.close();                  
+                            router.push('/todo');
+                        }, 1800);
+                    }
                 });
-
-                setTimeout(() => {
-                    router.push('/todo');
-                }, 1800);
             }
         };
 
@@ -55,11 +57,10 @@ export default function Login() {
 
     }, []);
 
-    
+
     return(
         <div className={styles.container}>
             <QRCode token={accessToken} />
-            <ToastContainer />
         </div>
     );
 

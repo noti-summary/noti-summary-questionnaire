@@ -11,7 +11,7 @@ export default function ShowSummaryList() {
     return(
         <div className={styles.container}>
             {context.isUserLoggedIn()
-              ? <SummaryList userId={context.user.userId}/>
+              ? <SummaryList userId={context.user}/>
               : <h2>使用本系統前，請先登入</h2>
             }
         </div>
