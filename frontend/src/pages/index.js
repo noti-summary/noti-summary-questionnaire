@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link';
 import Button from '@mui/material/Button';
 import styles from '../styles/Home.module.css'
-import SummaryList from '../components/summaryList';
+
 
 export default function Home() {
   return (

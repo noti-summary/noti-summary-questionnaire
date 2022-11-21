@@ -1,14 +1,17 @@
-import { useState, useEffect } from 'react';
-import styles from '../../styles/Home.module.css';
+import { useState, useEffect, useContext } from 'react';
+import { useRouter } from "next/router";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { AuthContext } from '../../components/context/authContext';
 import QRCode from '../../components/qrcode';
-import SummaryList from '../../components/summaryList';
+import styles from '../../styles/Home.module.css';
 
 
 export default function Login() {
 
     const [accessToken, setAccessToken] = useState("");
-    const [loggedIn, setLoggedIn] = useState(false);
-    const [userId, setUserId] = useState("");
+    const context = useContext(AuthContext);
+    const router = useRouter();
 
     useEffect(() => {
         const ws = new WebSocket(process.env.NEXT_PUBLIC_WS_URL);
@@ -20,12 +23,27 @@ export default function Login() {
         ws.onmessage = (event) => {
             const receive = JSON.parse(event.data);
 
-            if(receive.type == "token"){
+            if(receive.type === "token"){
                 setAccessToken(receive.message);
             }
-            else if(receive.type == "login"){ 
-                setLoggedIn(true);
-                setUserId(receive.message.slice(0, 3));
+            else if(receive.type === "login"){
+                context.setUser({userId: receive.message.slice(0, 3)});
+
+                toast.success('登入成功', {
+                    toastId: "login_success",
+                    position: "top-center",
+                    autoClose: 800,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: false,
+                    progress: undefined,
+                    theme: "dark",
+                });
+
+                setTimeout(() => {
+                    router.push('/todo');
+                }, 1800);
             }
         };
 
@@ -40,10 +58,8 @@ export default function Login() {
     
     return(
         <div className={styles.container}>
-            {loggedIn
-              ? <SummaryList userId={userId}/>
-              : <QRCode token={accessToken} />
-            }
+            <QRCode token={accessToken} />
+            <ToastContainer />
         </div>
     );
 

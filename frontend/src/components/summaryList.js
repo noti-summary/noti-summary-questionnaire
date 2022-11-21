@@ -6,7 +6,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import SummarizeIcon from '@mui/icons-material/Summarize';
 import axios from 'axios';
-import Toast from './toast.js';
+
 
 export default function SummaryList({userId}) {
 
@@ -23,7 +23,6 @@ export default function SummaryList({userId}) {
 
     return(
         <div>
-            <Toast />
             <h2>待完成摘要問卷</h2>
 
             <List>
@@ -36,7 +35,7 @@ export default function SummaryList({userId}) {
                             <ListItemText primary={`Go to questionnaire /${userId}/${sid}`} />
                         </ListItemButton>
                     </Link>
-                ))}
+                )).reverse()}
             </List>
             
         </div>
