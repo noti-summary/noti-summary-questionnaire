@@ -1,12 +1,55 @@
-import axios from 'axios';
+import { useState } from 'react';
 import NotiCard from './notiCard';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Checkbox from '@mui/material/Checkbox';
 
-function NotiList(props) {
+
+export default function NotiList(props) {
+    const [checked, setChecked] = useState([props.notis[0]]);
+  
+    const handleToggle = (value) => () => {
+      const currentIndex = checked.indexOf(value);
+      const newChecked = [...checked];
+  
+      if (currentIndex === -1) {
+        newChecked.push(value);
+      } else {
+        newChecked.splice(currentIndex, 1);
+      }
+      
+      console.log(newChecked)
+      setChecked(newChecked);
+    };
+
+  
     return (
-        <div>
-            {props.notis.map(noti => <NotiCard {...noti} key={noti.notificationId}/>)}
-        </div>
+      <List>
+        {props.notis.map((value) => {
+          const labelId = `checkbox-list-label-${value}`;
+  
+          return (
+            <ListItem key={value}>
+              <ListItemButton role={undefined} onClick={handleToggle(value)} dense>
+                <ListItemIcon>
+                  <Checkbox
+                    edge="start"
+                    checked={checked.indexOf(value) !== -1}
+                    tabIndex={-1}
+                    disableRipple
+                    inputProps={{ 'aria-labelledby': labelId }}
+                  />
+                </ListItemIcon>
+                <NotiCard {...value} key={value.notificationId}/>
+              </ListItemButton>
+            </ListItem>
+          );
+        })}
+      </List>
     );
-}
+  }
 
-export default NotiList;
+  
