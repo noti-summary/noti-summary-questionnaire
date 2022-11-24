@@ -26,7 +26,7 @@ export default function Bar() {
             <SmartphoneIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            MUI Lab &nbsp;|&nbsp; Notification Summary
+            Notification Summary
           </Typography>
           <Button color="inherit" onClick={() => router.push('/about')}>About</Button>
         </Toolbar>

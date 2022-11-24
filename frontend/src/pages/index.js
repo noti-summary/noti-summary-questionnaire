@@ -26,7 +26,7 @@ export default function Home() {
 
       <footer className={styles.footer}>
         <a>
-          Copyright © 2022 noti-summary
+          Copyright © 2022 noti-summary, MUI Lab
         </a>
       </footer>
     </div>
