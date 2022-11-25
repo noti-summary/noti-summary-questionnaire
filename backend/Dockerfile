@@ -12,4 +12,6 @@ RUN pip3 install -r requirements.txt
 
 COPY ./app ./app
 
+COPY .env .env
+
 CMD [ "python3", "/backend/app/main.py" ]
