@@ -9,7 +9,6 @@ on:
 
 jobs:   
   deploy:
-    needs: build_docker
     runs-on: ubuntu-20.04
     steps:
     - name: Deploy to Google Compute Engine
