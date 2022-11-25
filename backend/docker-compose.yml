@@ -1,0 +1,42 @@
+version: "3.7"
+
+services:
+    nginx:
+        image: nginx:latest
+        container_name: nginx_container
+        volumes:
+            - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+        networks:
+            - docker-network
+        ports:
+            - 80:80
+            - 443:443
+        depends_on:
+            - backend_server
+
+    backend_server:    
+        build: .
+        container_name: backend_container
+        volumes:
+            - ./app:/backend/app
+        networks:
+            docker-network:
+                aliases:
+                    - backend_server
+        ports:
+            - 8000:8000
+        environment:
+            type: ${type}
+            project_id: ${project_id}
+            private_key_id: ${private_key_id}
+            private_key: ${private_key}
+            client_email: ${client_email}
+            client_id: ${client_id}
+            auth_uri: ${auth_uri}
+            token_uri: ${token_uri}
+            auth_provider_x509_cert_url: ${auth_provider_x509_cert_url}
+            client_x509_cert_url: ${client_x509_cert_url}
+            admin_password: ${admin_password}
+
+networks:
+    docker-network:
