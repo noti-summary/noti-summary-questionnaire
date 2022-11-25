@@ -20,4 +20,4 @@ jobs:
         script: |
           cd noti-summary-questionnaire/backend
           git pull
-          docker-compose up --build --env-file .env -d
+          docker-compose --env-file .env up --build  -d
