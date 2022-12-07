@@ -1,29 +1,24 @@
-import { useRouter } from 'next/router';
+import React from 'react';
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+
+import NotiList from '../../../../components/notilist';
 
 
-export default function Finish() {
-
-    const router = useRouter();
-    const {userId, summaryId} = router.query
-    const [summary, setSummary] = useState(null);
+export async function getServerSideProps(context) {
+    const {userId, summaryId} = context.query
     const dataURL = `http://0.0.0.0:5000/summary/${userId}/${summaryId}`;
 
-    useEffect(() => {
-        if(!router.isReady) return;
+    const response = await axios.get(dataURL);
 
-        axios.get(dataURL).then((res) => {
-            setSummary(res.data)
-        });
-    }, [userId, summaryId]);
+    return { props: {summary: response.data} }
+}
 
-
-    if(!summary) return null; 
+export default function Finish(props) {
 
     return(
         <div>
-            <h2>{summary.userId} {summary.summaryId} {summary.notification.length} {summary.summary}</h2>
+            <h2>{props.summary.userId} {props.summary.summaryId} {props.summary.notification.length} {props.summary.summary}</h2>
+            <NotiList notis={props.summary.notification}/>
         </div>
     )
 }

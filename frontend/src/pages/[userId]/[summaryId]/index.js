@@ -1,34 +1,26 @@
-import { useRouter } from 'next/router';
+import React from 'react';
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
-import NotiList from '../../../components/notiList';
+
+import NotiList from '../../../components/notilist';
 import Quest from '../../../components/questionnaire';
 
 
-export default function Questionnaire() {
-
-    const router = useRouter();
-    const {userId, summaryId} = router.query
-    const [notiData, setNoti] = useState(null);
-    const [summary, setSum] = useState(null);
+export async function getServerSideProps(context) {
+    const {userId, summaryId} = context.query
     const dataURL = `http://0.0.0.0:5000/summary/${userId}/${summaryId}`;
-    
-    useEffect(() => {
-        if(!router.isReady) return;
 
-        axios.get(dataURL).then((res) => {
-            setNoti(res['data']['notification']);
-            setSum(res['data']);
-        })
-    }, [userId, summaryId]);
+    const response = await axios.get(dataURL);
 
-    if (!notiData)  return null;
+    return { props: {summary: response.data} }
+}
+
+export default function Questionnaire(props) {
 
     return(
         <div>
-            <h1>This is /{userId}/{summaryId}</h1>
+            <h1>This is /{props.summary.userId}/{props.summary.summaryId}</h1>
             <div className="grid gap-x-96 grid-cols-2">
-                <NotiList notis={notiData}/>
+                <NotiList notis={props.summary.notification}/>
                 <Quest/>
             </div>
         </div>
