@@ -10,7 +10,7 @@ import axios from 'axios';
 
 export default function SummaryList({userId}) {
 
-    const url = `http://localhost:5000/summary/undone/${userId}`;
+    const url = `http://localhost:8000/summary/undone/${userId}`;
     const [summaryIds, setSummaryIds] = useState(null);
 
     useEffect(() => {

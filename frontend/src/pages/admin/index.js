@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import Link from 'next/link'
+import Link from 'next/link';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -14,7 +14,7 @@ import { AuthContext } from '../../components/context/authContext';
 
 export default function Admin() {
 
-    const url = "http://localhost:5000/summary/finish";
+    const url = "http://localhost:8000/summary/finish";
     const [summaryIds, setSummaryIds] = useState(null);
     const context = useContext(AuthContext);
 
