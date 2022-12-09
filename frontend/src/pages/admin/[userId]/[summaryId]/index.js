@@ -6,7 +6,7 @@ import NotiList from '../../../../components/notilist';
 
 export async function getServerSideProps(context) {
     const {userId, summaryId} = context.query
-    const dataURL = `http://0.0.0.0:5000/summary/${userId}/${summaryId}`;
+    const dataURL = `http://0.0.0.0:8000/summary/${userId}/${summaryId}`;
 
     const response = await axios.get(dataURL);
 

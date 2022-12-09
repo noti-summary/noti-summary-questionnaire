@@ -80,8 +80,8 @@ export default function Questionnaire(props) {
             </Stepper>
             {activeStep === steps.length ? (
                 <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                    <Link href="/login" passHref>
-                        <Button variant="contained" size="large">回首頁</Button>
+                    <Link href="/todo" passHref>
+                        <Button variant="contained" size="large">回到目錄</Button>
                     </Link>
                 </Box>
             ) : (
