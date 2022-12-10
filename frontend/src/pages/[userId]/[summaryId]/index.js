@@ -40,6 +40,7 @@ function getStepContent(step, summaryList, summary, setSummary) {
             </div>
         );
       case 2:
+      case 3: // Link to /todo doesn't trigger immediately
         return <ThankText />;
       default:
         throw new Error('Unknown step');
@@ -51,8 +52,8 @@ export default function Questionnaire(props) {
 
     const handleNext = () => {
         if (activeStep === steps.length - 1) {
-            console.log(summaryRet);
-            // TODO: send summaryRet back to Firestore
+            console.log(summaryContent);
+            // TODO: send summaryContent back to Firestore
         }
         setActiveStep(activeStep + 1);
     };
@@ -61,7 +62,7 @@ export default function Questionnaire(props) {
         setActiveStep(activeStep - 1);
     };
 
-    const [summaryRet, setSummary] = useState({
+    const [summaryContent, setSummary] = useState({
         text: '',
         reason: ''
     });
@@ -78,17 +79,10 @@ export default function Questionnaire(props) {
                 </Step>
                 ))}
             </Stepper>
-            {activeStep === steps.length ? (
-                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                    <Link href="/todo" passHref>
-                        <Button variant="contained" size="large">回到目錄</Button>
-                    </Link>
-                </Box>
-            ) : (
-                <Paper elevation={3} sx={{ p: { xs: 2, md: 3 } }}>
+            <Paper elevation={3} sx={{ p: { xs: 2, md: 3 } }}>
                 <React.Fragment>
                     {/* main content */}
-                    {getStepContent(activeStep, props.summaryList, summaryRet, setSummary)}
+                    {getStepContent(activeStep, props.summaryList, summaryContent, setSummary)}
 
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                         {activeStep !== 0 && (
@@ -102,12 +96,14 @@ export default function Questionnaire(props) {
                             onClick={handleNext}
                             sx={{ mt: 3, ml: 1 }}
                         >
-                            {activeStep === steps.length - 1 ? '送出' : '下一頁'}
+                            {activeStep === steps.length - 1 ?
+                                (<Link href="/todo" passHref>送出</Link>) :
+                                '下一頁'
+                            }
                         </Button>
                     </Box>
                 </React.Fragment>
-                </Paper>
-            )}
+            </Paper>
         </Container>
     )
 }

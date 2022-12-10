@@ -25,7 +25,6 @@ function SummaryTextBox(props) {
             <TextField
                 id="outlined-textarea"
                 placeholder="請填寫通知摘要"
-                id="fullWidth"
                 multiline
                 value={summaryText}
                 onChange={onTextChange}
@@ -37,7 +36,6 @@ function SummaryTextBox(props) {
             <TextField
                 id="outlined-textarea"
                 placeholder="通知摘要的原因"
-                id="fullWidth"
                 multiline
                 value={summaryReason}
                 onChange={onReasonChange}
