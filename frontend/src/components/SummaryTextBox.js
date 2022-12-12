@@ -9,11 +9,11 @@ function SummaryTextBox(props) {
     const [summaryReason, setSummaryReason] = useState(props.summary.reason);
     const onTextChange = (e) => {
         setSummaryText(e.target.value)
-        props.setSummary({text: e.target.value, reason: summaryReason});
+        props.setSummary({'summary': e.target.value, 'reason': summaryReason});
     };
     const onReasonChange = (e) => {
         setSummaryReason(e.target.value)
-        props.setSummary({text: summaryText, reason: e.target.value});
+        props.setSummary({'summary': summaryText, 'reason': e.target.value});
         
     };
 

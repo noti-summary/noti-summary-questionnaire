@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useForm } from "react-hook-form";
-import Likert from "../../../components/likert";
 
 import NotiList from '../../../components/NotiList';
 import Quest from '../../../components/Questionnaire';
@@ -49,12 +49,16 @@ function getStepContent(step, summaryList,
 }
 
 export default function Questionnaire(props) {
+    const router = useRouter();
+    const { userId, summaryId } = router.query;
+
     const [activeStep, setActiveStep] = useState(0);
 
     const handleNext = () => {
         if (activeStep === steps.length - 1) {
-            console.log(summaryContent);
-            // TODO: send summaryContent back to Firestore
+            console.log({...summaryContent, ...summaryQuest});
+            const dataURL = `http://0.0.0.0:8000/summary/${userId}/${summaryId}`;
+            axios.post(dataURL, {...summaryContent, ...summaryQuest});
         }
         setActiveStep(activeStep + 1);
     };
@@ -64,13 +68,16 @@ export default function Questionnaire(props) {
     };
 
     const [summaryContent, setSummary] = useState({
-        text: '',
-        reason: ''
+        'summary': '',
+        'reason': ''
     });
+
+    const [summaryQuest, setSummaryQuest] = useState({});
 
     const { register, handleSubmit } = useForm();
     const onSubmit = (data) => {
-        console.log(data)
+        console.log(data);
+        setSummaryQuest(data);
         handleNext();
     };
 
