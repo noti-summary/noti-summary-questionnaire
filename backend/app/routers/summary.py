@@ -61,4 +61,9 @@ async def get_finish_summary_id(credentials: HTTPBasicCredentials = Depends(secu
 async def update_summary(userId: str, summaryId: str, input: Questionnaire) -> Questionnaire:
     doc_ref = db.collection(u'summary').document(f'{userId}_{summaryId}')
     doc_ref.update({u'summary': input.summary})
+    doc_ref.update({u'reason': input.reason})
+
+    # quest.
+    doc_ref.update({u'q1': input.q1})
+    doc_ref.update({u'q2': input.q2})
     return input
