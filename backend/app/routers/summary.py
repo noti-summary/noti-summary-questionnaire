@@ -17,16 +17,16 @@ async def get_undone_summary_id(userId: str) -> list[str]:
 
 @summary_router.get("/{userId}/{summaryId}", response_model=Summary)
 async def get_summary(userId: str, summaryId: str) -> Summary:
-    doc = db.collection(u'summary').document(f'{userId}_{summaryId}').get()
+    doc = db.collection(u'summary').document(f'{summaryId}').get()
     doc = doc.to_dict()
 
     notis = []
-    for nid in doc["notification"]:
-        noti = db.collection(u'notification').document(f'{nid}').get()
+    for nid in doc["notifications"]:
+        noti = db.collection(u'notifications').document(f'{nid}').get()
         if noti.exists:
             notis.append(noti.to_dict())
 
-    doc["notification"] = notis
+    doc["notifications"] = notis
 
     return doc
 
@@ -59,11 +59,12 @@ async def get_finish_summary_id(credentials: HTTPBasicCredentials = Depends(secu
 
 @summary_router.post("/{userId}/{summaryId}")
 async def update_summary(userId: str, summaryId: str, input: Questionnaire) -> Questionnaire:
-    doc_ref = db.collection(u'summary').document(f'{userId}_{summaryId}')
+    doc_ref = db.collection(u'summary').document(f'{summaryId}')
+
+    doc_ref.update({u'submitTime': input.submitTime})
+    doc_ref.update({u'selectedNotifications': input.selectedNotifications})
+    doc_ref.update({u'esm': input.esm})
     doc_ref.update({u'summary': input.summary})
     doc_ref.update({u'reason': input.reason})
-
-    # quest.
-    doc_ref.update({u'q1': input.q1})
-    doc_ref.update({u'q2': input.q2})
+    
     return input
