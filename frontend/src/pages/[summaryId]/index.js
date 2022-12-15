@@ -21,7 +21,7 @@ import Button from '@mui/material/Button';
 
 export async function getServerSideProps(context) {
     const {summaryId} = context.query
-    const dataURL = `http://0.0.0.0:8000/summary/${summaryId}`;
+    const dataURL = `${process.env.NEXT_PUBLIC_SERVER_IP}/summary/${summaryId}`;
 
     const response = await axios.get(dataURL);
 
@@ -58,7 +58,7 @@ export default function Questionnaire(props) {
         if (activeStep === steps.length - 1) {
             const submitTime = new Date().toISOString().substring(0, 19);
             console.log({...summaryContent, esm, submitTime});
-            const dataURL = `http://0.0.0.0:8000/summary/${summaryId}`;
+            const dataURL = `${process.env.NEXT_PUBLIC_SERVER_IP}/summary/${summaryId}`;
             axios.post(dataURL, {...summaryContent, esm, submitTime});
         }
         setActiveStep(activeStep + 1);
