@@ -58,7 +58,7 @@ async def get_summary(summaryId: str) -> Summary:
     return doc
 
 
-@summary_router.post("{summaryId}")
+@summary_router.post("/{summaryId}", response_model=Questionnaire)
 async def update_summary(summaryId: str, input: Questionnaire) -> Questionnaire:
     doc_ref = db.collection(u'summary').document(f'{summaryId}')
 
@@ -67,7 +67,7 @@ async def update_summary(summaryId: str, input: Questionnaire) -> Questionnaire:
     doc_ref.update({u'summary': input.summary})
     doc_ref.update({u'reason': input.reason})
 
-    for snoti in input.selectedNotifications:
-        doc_ref.update({u'selectedNotifications': firestore.ArrayUnion([snoti.dict()])})
+    # for snoti in input.selectedNotifications:
+    #     doc_ref.update({u'selectedNotifications': firestore.ArrayUnion([snoti.dict()])})
     
     return input

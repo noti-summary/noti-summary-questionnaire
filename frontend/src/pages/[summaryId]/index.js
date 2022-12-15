@@ -4,10 +4,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useForm } from "react-hook-form";
 
-import NotiList from '../../../components/NotiList';
-import Quest from '../../../components/Questionnaire';
-import SummaryTextBox from '../../../components/SummaryTextBox';
-import ThankText from '../../../components/ThankText';
+import NotiList from '../../components/NotiList';
+import Quest from '../../components/Questionnaire';
+import SummaryTextBox from '../../components/SummaryTextBox';
+import ThankText from '../../components/ThankText';
 
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
@@ -20,15 +20,15 @@ import Button from '@mui/material/Button';
 
 
 export async function getServerSideProps(context) {
-    const {userId, summaryId} = context.query
-    const dataURL = `http://0.0.0.0:8000/summary/${userId}/${summaryId}`;
+    const {summaryId} = context.query
+    const dataURL = `http://0.0.0.0:8000/summary/${summaryId}`;
 
     const response = await axios.get(dataURL);
 
     return { props: {summaryList: response.data} }
 }
 
-const steps = ['', '', ''];
+const steps = ['step1', 'step2', 'step3'];
 
 function getStepContent(step, summaryList,
                         summary, setSummary) {
@@ -36,7 +36,7 @@ function getStepContent(step, summaryList,
       case 1:
         return (
             <div className="grid gap-x-80 grid-cols-2">
-                <NotiList notis={summaryList.notification}/>
+                <NotiList notis={summaryList.notifications}/>
                 <SummaryTextBox setSummary={setSummary} summary={summary}/>
             </div>
         );
@@ -50,15 +50,16 @@ function getStepContent(step, summaryList,
 
 export default function Questionnaire(props) {
     const router = useRouter();
-    const { userId, summaryId } = router.query;
+    const { summaryId } = router.query;
 
     const [activeStep, setActiveStep] = useState(0);
 
     const handleNext = () => {
         if (activeStep === steps.length - 1) {
-            console.log({...summaryContent, ...summaryQuest});
-            const dataURL = `http://0.0.0.0:8000/summary/${userId}/${summaryId}`;
-            axios.post(dataURL, {...summaryContent, ...summaryQuest});
+            const submitTime = new Date().toISOString().substring(0, 19);
+            console.log({...summaryContent, esm, submitTime});
+            const dataURL = `http://0.0.0.0:8000/summary/${summaryId}`;
+            axios.post(dataURL, {...summaryContent, esm, submitTime});
         }
         setActiveStep(activeStep + 1);
     };
@@ -72,12 +73,12 @@ export default function Questionnaire(props) {
         'reason': ''
     });
 
-    const [summaryQuest, setSummaryQuest] = useState({});
+    const [esm, setEsm] = useState({});
 
     const { register, handleSubmit } = useForm();
     const onSubmit = (data) => {
         console.log(data);
-        setSummaryQuest(data);
+        setEsm(data);
         handleNext();
     };
 
@@ -86,19 +87,19 @@ export default function Questionnaire(props) {
             <Typography component="h1" mt={2} variant="h4" align="center">
                 Summary Quest.
             </Typography>
-            <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
+            <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }} alternativeLabel>
                 {steps.map((label) => (
-                <Step key={label}>
-                    <StepLabel>{label}</StepLabel>
-                </Step>
+                <Step key={label}><StepLabel></StepLabel></Step>
                 ))}
             </Stepper>
             <Paper elevation={3} sx={{ p: { xs: 2, md: 3 } }}>
                 <React.Fragment>
                     {/* main content */}
                     {activeStep !== 0 ?
+                        // step 0
                         getStepContent(activeStep, props.summaryList,
                                        summaryContent, setSummary) :
+                        // step 1, 2
                         (<form onSubmit={handleSubmit(onSubmit)}>
                             <Quest register={register}/>
                             <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -121,7 +122,7 @@ export default function Questionnaire(props) {
                                 onClick={handleNext}
                                 sx={{ mt: 3, ml: 1 }}
                             >
-                                {activeStep === steps.length - 1 ?
+                                {activeStep >= steps.length - 1 ?
                                     (<Link href="/todo" passHref>送出</Link>) :
                                     '下一頁'
                                 }
