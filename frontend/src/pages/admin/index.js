@@ -14,7 +14,7 @@ import { AuthContext } from '../../components/context/authContext';
 
 export default function Admin() {
 
-    const url = "http://localhost:8000/summary/finish";
+    const url = `${process.env.NEXT_PUBLIC_SERVER_IP}/summary/finish`;
     const [summaryIds, setSummaryIds] = useState(null);
     const context = useContext(AuthContext);
 
@@ -82,12 +82,12 @@ export default function Admin() {
             {summaryIds &&
                 <List>
                     {summaryIds.map((sid) => (
-                        <Link key={sid} href={`/admin/${context.adminInfo.username}/${sid}`} passHref>
+                        <Link key={sid} href={`/admin/${sid}`} passHref>
                             <ListItemButton> 
                                 <ListItemIcon>
                                     <CheckCircleIcon color="success" fontSize="medium"/>
                                 </ListItemIcon>
-                                <ListItemText primary={`Go to finished questionnaire /${context.adminInfo.username}/${sid}`} />
+                                <ListItemText primary={`Go to finished questionnaire ${sid}`} />
                             </ListItemButton>
                         </Link>
                     )).reverse()}

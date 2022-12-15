@@ -10,7 +10,7 @@ import axios from 'axios';
 
 export default function SummaryList({userId}) {
 
-    const url = `http://localhost:8000/summary/undone/${userId}`;
+    const url = `${process.env.NEXT_PUBLIC_SERVER_IP}/summary/undone/${userId}`;
     const [summaryIds, setSummaryIds] = useState(null);
 
     useEffect(() => {
@@ -27,12 +27,12 @@ export default function SummaryList({userId}) {
 
             <List>
                 {summaryIds.map((sid) => (
-                    <Link key={sid} href={`/${userId}/${sid}`} passHref>
+                    <Link key={sid} href={`/${sid}`} passHref>
                         <ListItemButton> 
                             <ListItemIcon>
                                 <SummarizeIcon color="primary" fontSize="large"/>
                             </ListItemIcon>
-                            <ListItemText primary={`Go to questionnaire /${userId}/${sid}`} />
+                            <ListItemText primary={`Go to questionnaire ${sid}`} />
                         </ListItemButton>
                     </Link>
                 )).reverse()}
