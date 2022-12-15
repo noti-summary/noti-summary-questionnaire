@@ -4,7 +4,11 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AuthContext } from '../../components/context/authContext';
 import QRCode from '../../components/qrcode';
-import styles from '../../styles/Home.module.css';
+
+import Paper from '@mui/material/Paper';
+import Container from '@mui/material/Container';
+
+// import styles from '../../styles/Home.module.css';
 
 
 export default function Login() {
@@ -59,9 +63,13 @@ export default function Login() {
 
 
     return(
-        <div className={styles.container}>
-            <QRCode token={accessToken} />
-        </div>
+        // <div className={styles.container}>
+        <Container component="main">
+            <Paper elevation={3} sx={{ p: { xs: 2, md: 3 } }}>
+                <QRCode token={accessToken} />
+            </Paper>
+        </Container>
+        // </div>
     );
 
 }
