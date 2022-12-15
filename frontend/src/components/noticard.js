@@ -1,6 +1,6 @@
-function Noticard(props) {
+function NotiCard(props) {
     return (
-        <div className="flex flex-col w-80 bg-slate-800 rounded-lg">
+        <div className="flex flex-col w-80 rounded-lg">
             <div>
                 <p className="m-1">{props.appName}</p>
             </div>
@@ -13,4 +13,4 @@ function Noticard(props) {
     );
 }
 
-export default Noticard;
+export default NotiCard;

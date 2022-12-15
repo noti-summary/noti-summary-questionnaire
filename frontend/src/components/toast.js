@@ -7,10 +7,10 @@ export default function Toast() {
     toast.success('登入成功', {
         toastId: "login_success",
         position: "top-center",
-        autoClose: 1500,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
-        pauseOnHover: true,
+        pauseOnHover: false,
         draggable: false,
         progress: undefined,
         theme: "dark",
@@ -18,18 +18,7 @@ export default function Toast() {
 
     return(
         <div>
-            <ToastContainer
-                position="top-center"
-                autoClose={2000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable={false}
-                pauseOnHover
-                theme="dark"
-                />
+            <ToastContainer />
         </div>
     );
 }

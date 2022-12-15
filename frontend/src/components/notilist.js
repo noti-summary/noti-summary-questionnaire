@@ -1,45 +1,65 @@
-import axios from 'axios';
-import Noticard from './noticard';
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import Checkbox from '@mui/material/Checkbox';
+import Box from '@mui/material/Box';
+import { FixedSizeList } from 'react-window';
+import NotiCard from './notiCard';
 
-const dataURL = "http://0.0.0.0:8000/summary/000/123";
+export default function NotiList(props) {
 
-const testData = [
-    {
-        "appName": "Messenger",
-        "category": "msg",
-        "content": "👍",
-        "notificationId": "000_1667459329893",
-        "time": "15:08",
-        "title": "Message",
-        "userId": "000"
-    },
-    {
-        "appName": "Messenger",
-        "category": "msg",
-        "content": "👍",
-        "notificationId": "000_1667459329893",
-        "time": "15:08",
-        "title": "Message",
-        "userId": "000"
-    }
-];
+  const Rows = () => {
+    const [checked, setChecked] = useState([]);
+  
+    const handleToggle = (value) => () => {
+      const currentIndex = checked.indexOf(value);
+      const newChecked = [...checked];
+  
+      if (currentIndex === -1) {
+        newChecked.push(value);
+      } else {
+        newChecked.splice(currentIndex, 1);
+      }
+      
+      setChecked(newChecked);
+    };
 
-function Notilist() {
-    // const [notiData, setNoti] = useState(null);
-    // useEffect(() => {
-    //     axios.get(dataURL).then((res) => {
-    //         setNoti(res['notification']);
-    //     })
-    // }, []);
+    const renderItems = props.notis.map((value) => 
+      <ListItem key={value}>
+        <ListItemButton role={undefined} onClick={handleToggle(value)} dense>
+          <ListItemIcon>
+            <Checkbox
+              edge="start"
+              checked={checked.indexOf(value) !== -1}
+              tabIndex={-1}
+              disableRipple
+              inputProps={{ 'aria-labelledby': `checkbox-list-label-${value}` }}
+            />
+          </ListItemIcon>
+          <NotiCard {...value} key={value.notificationId}/>
+        </ListItemButton>
+      </ListItem>
+    )
 
-    // if (!notiData)  return null;
-    
-    return (
-        <div>
-            {testData.map(noti => <Noticard {...noti} key={noti.notificationId}/>)}
-        </div>
-    );
+    return renderItems;
+  }
+
+  return (
+    <Box
+      sx={{ width: '100%', height: 400, maxWidth: 360, bgcolor: 'background.paper' }}
+    >
+      <FixedSizeList
+        height={400}
+        width={360}
+        itemSize={40}
+        itemCount={1}
+        overscanCount={3}
+      >
+        {Rows}
+      </FixedSizeList>
+    </Box>
+  );
 }
 
-export default Notilist;
+  

@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-
+from typing import Dict, Any
 
 class Notification(BaseModel):
     appName: str
@@ -14,16 +14,19 @@ class Notification(BaseModel):
 class Summary(BaseModel):
     userId: str
     summaryId: str
-    # startTime: str
-    # endTime: str
-    # submitTime: str
-    notification: list[Notification]
+    startTime: str
+    endTime: str
+    submitTime: str
+    notifications: list[Notification]
+    selectedNotifications: list[Notification]
+    esm: Dict[str, Any]
     summary: str
-    # reason: str
+    reason: str
 
 
 class Questionnaire(BaseModel):
-    # submitTime: str
-    # esm: str
-    # reason: str
+    submitTime: str
+    # selectedNotifications: list[Notification]
+    esm: Dict[str, Any]
     summary: str
+    reason: str
