@@ -1,4 +1,4 @@
-import Likert from "./likert";
+import Likert from "./Likert";
 
 function Quest(props) {
     return (

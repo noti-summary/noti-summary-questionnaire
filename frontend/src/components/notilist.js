@@ -5,7 +5,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import Checkbox from '@mui/material/Checkbox';
 import Box from '@mui/material/Box';
 import { FixedSizeList } from 'react-window';
-import NotiCard from './notiCard';
+import NotiCard from './NotiCard';
 
 export default function NotiList(props) {
 

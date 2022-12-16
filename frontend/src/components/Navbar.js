@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import SmartphoneIcon from '@mui/icons-material/Smartphone';
 import { useRouter } from "next/router";
 
-export default function Bar() {
+export default function Navbar() {
 
   const router = useRouter();
 

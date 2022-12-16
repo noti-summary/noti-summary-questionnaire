@@ -10,7 +10,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
-import { AuthContext } from '../../components/context/authContext';
+import { AuthContext } from '../../components/context/AuthContext';
 
 export default function Admin() {
 

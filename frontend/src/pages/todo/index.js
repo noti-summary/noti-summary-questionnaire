@@ -2,9 +2,9 @@ import { useContext } from 'react';
 import { useRouter } from "next/router";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { AuthContext } from '../../components/context/authContext';
+import { AuthContext } from '../../components/context/AuthContext';
 import styles from '../../styles/Home.module.css';
-import SummaryList from '../../components/summaryList';
+import SummaryList from '../../components/SummaryList';
 
 
 export default function ShowSummaryList() {

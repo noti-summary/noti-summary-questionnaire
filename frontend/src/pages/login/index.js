@@ -2,8 +2,8 @@ import { useState, useEffect, useContext } from 'react';
 import { useRouter } from "next/router";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { AuthContext } from '../../components/context/authContext';
-import QRCode from '../../components/qrcode';
+import { AuthContext } from '../../components/context/AuthContext';
+import QRCode from '../../components/QRCode';
 
 import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
