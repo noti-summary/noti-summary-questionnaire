@@ -12,7 +12,7 @@ summary_router = APIRouter()
 @summary_router.get("/undone/{userId}", response_model=list[str])
 async def get_undone_summary_id(userId: str) -> list[str]:
     docs = db.collection(u'summary').where(u'userId', u'==', userId).where(u'summary', u'==', u'').stream()
-    ids = [doc.to_dict()["summaryId"] for doc in docs]
+    ids = [doc.to_dict()["summaryId"] async for doc in docs]
     return ids
 
 
@@ -34,7 +34,7 @@ async def get_finish_summary_id(credentials: HTTPBasicCredentials = Depends(secu
     docs = db.collection(u'summary').where(u'userId', u'==', credentials.username).stream()
     
     ids = []
-    for doc in docs:
+    async for doc in docs:
         doc = doc.to_dict()
         if doc["summary"] != "":
             ids.append(doc["summaryId"])
@@ -44,12 +44,14 @@ async def get_finish_summary_id(credentials: HTTPBasicCredentials = Depends(secu
 
 @summary_router.get("/{summaryId}", response_model=Summary)
 async def get_summary(summaryId: str) -> Summary:
-    doc = db.collection(u'summary').document(f'{summaryId}').get()
+    doc_ref = db.collection(u'summary').document(f'{summaryId}')
+    doc = await doc_ref.get()
     doc = doc.to_dict()
 
     notis = []
     for nid in doc["notifications"]:
-        noti = db.collection(u'notification').document(f'{nid}').get()
+        noti_ref = db.collection(u'notification').document(f'{nid}')
+        noti = await noti_ref.get()
         if noti.exists:
             notis.append(noti.to_dict())
 
@@ -62,13 +64,13 @@ async def get_summary(summaryId: str) -> Summary:
 async def update_summary(summaryId: str, input: Questionnaire) -> Questionnaire:
     doc_ref = db.collection(u'summary').document(f'{summaryId}')
 
-    doc_ref.update({u'submitTime': input.submitTime})
-    doc_ref.update({u'esm': input.esm})
-    doc_ref.update({u'summary': input.summary})
-    doc_ref.update({u'reason': input.reason})
+    await doc_ref.update({u'submitTime': input.submitTime})
+    await doc_ref.update({u'esm': input.esm})
+    await doc_ref.update({u'summary': input.summary})
+    await doc_ref.update({u'reason': input.reason})
 
-    doc_ref.update({u'selectedNotifications': firestore.DELETE_FIELD})
+    await doc_ref.update({u'selectedNotifications': firestore.DELETE_FIELD})
     for snoti in input.selectedNotifications:
-        doc_ref.update({u'selectedNotifications': firestore.ArrayUnion([snoti.dict()])})
+        await doc_ref.update({u'selectedNotifications': firestore.ArrayUnion([snoti.dict()])})
     
     return input
