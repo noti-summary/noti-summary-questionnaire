@@ -10,11 +10,9 @@ import NotiCard from './NotiCard';
 export default function NotiList(props) {
 
   const Rows = () => {
-    const [checked, setChecked] = useState([]);
-  
     const handleToggle = (value) => () => {
-      const currentIndex = checked.indexOf(value);
-      const newChecked = [...checked];
+      const currentIndex = props.checked.indexOf(value);
+      const newChecked = [...props.checked];
   
       if (currentIndex === -1) {
         newChecked.push(value);
@@ -22,16 +20,16 @@ export default function NotiList(props) {
         newChecked.splice(currentIndex, 1);
       }
       
-      setChecked(newChecked);
+      props.setChecked(newChecked);
     };
 
     const renderItems = props.notis.map((value) => 
-      <ListItem key={value}>
+      <ListItem key={value.notificationId}>
         <ListItemButton role={undefined} onClick={handleToggle(value)} dense>
           <ListItemIcon>
             <Checkbox
               edge="start"
-              checked={checked.indexOf(value) !== -1}
+              checked={props.checked.indexOf(value) !== -1}
               tabIndex={-1}
               disableRipple
               inputProps={{ 'aria-labelledby': `checkbox-list-label-${value}` }}

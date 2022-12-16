@@ -30,13 +30,12 @@ export async function getServerSideProps(context) {
 
 const steps = ['step1', 'step2', 'step3'];
 
-function getStepContent(step, summaryList,
-                        summary, setSummary) {
+function getStepContent(step, summaryList, summary, setSummary, checked, setChecked) {
     switch (step) {
       case 1:
         return (
             <div className="grid gap-x-80 grid-cols-2">
-                <NotiList notis={summaryList.notifications}/>
+                <NotiList notis={summaryList.notifications} checked={checked} setChecked={setChecked}/>
                 <SummaryTextBox setSummary={setSummary} summary={summary}/>
             </div>
         );
@@ -52,14 +51,16 @@ export default function Questionnaire(props) {
     const router = useRouter();
     const { summaryId } = router.query;
 
+    const [checked, setChecked] = useState([]);
+
     const [activeStep, setActiveStep] = useState(0);
 
     const handleNext = () => {
         if (activeStep === steps.length - 1) {
             const submitTime = new Date().toISOString().substring(0, 19);
-            console.log({...summaryContent, esm, submitTime});
+            console.log({...summaryContent, esm, submitTime, checked});
             const dataURL = `${process.env.NEXT_PUBLIC_SERVER_IP}/summary/${summaryId}`;
-            axios.post(dataURL, {...summaryContent, esm, submitTime});
+            axios.post(dataURL, {...summaryContent, esm, submitTime, selectedNotifications: checked});
         }
         setActiveStep(activeStep + 1);
     };
@@ -97,8 +98,14 @@ export default function Questionnaire(props) {
                     {/* main content */}
                     {activeStep !== 0 ?
                         // step 0
-                        getStepContent(activeStep, props.summaryList,
-                                       summaryContent, setSummary) :
+                        getStepContent(
+                            activeStep, 
+                            props.summaryList, 
+                            summaryContent, 
+                            setSummary, 
+                            checked, 
+                            setChecked
+                        ):
                         // step 1, 2
                         (<form onSubmit={handleSubmit(onSubmit)}>
                             <Quest register={register}/>
