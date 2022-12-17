@@ -38,7 +38,7 @@ export default function NotiList(props) {
           <NotiCard {...value} key={value.notificationId}/>
         </ListItemButton>
       </ListItem>
-    ).reverse()
+    ).reverse();
 
     return renderItems;
   }
