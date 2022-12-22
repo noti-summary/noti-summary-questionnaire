@@ -56,13 +56,15 @@ export default function Questionnaire(props) {
     const [activeStep, setActiveStep] = useState(0);
 
     const handleNext = () => {
-        if (activeStep === steps.length - 1) {
+        if (activeStep >= steps.length - 1) {
             const submitTime = new Date().toISOString().substring(0, 19);
             console.log({...summaryContent, esm, submitTime, checked});
             const dataURL = `${process.env.NEXT_PUBLIC_SERVER_IP}/summary/${summaryId}`;
             axios.post(dataURL, {...summaryContent, esm, submitTime, selectedNotifications: checked});
         }
-        setActiveStep(activeStep + 1);
+        else {
+            setActiveStep(activeStep + 1);
+        }
     };
 
     const handleBack = () => {

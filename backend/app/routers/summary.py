@@ -69,7 +69,8 @@ async def update_summary(summaryId: str, input: Questionnaire) -> Questionnaire:
     await doc_ref.update({u'summary': input.summary})
     await doc_ref.update({u'reason': input.reason})
 
-    await doc_ref.update({u'selectedNotifications': firestore.DELETE_FIELD})
+    if len(input.selectedNotifications):
+        await doc_ref.update({u'selectedNotifications': firestore.DELETE_FIELD})
     for snoti in input.selectedNotifications:
         await doc_ref.update({u'selectedNotifications': firestore.ArrayUnion([snoti.dict()])})
     
