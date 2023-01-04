@@ -1,19 +1,20 @@
 function NotiCard(props) {
     const time = new Date(props.postTime);
     return (
-        <div className="flex flex-col w-80 rounded-lg">
-            <div>
-                <p className="m-1">{props.appName}</p>
-            </div>
-            <div className="flex justify-between">
-                <p className="m-1 font-semibold">{props.title}</p>
-                <p className="m-1 text-slate-400">
-                    {time.getMonth().toString().padStart(2, '0')}/
+        <div className="flex flex-col w-full">
+            <div className="flex flex-row content-center h-6 w-full">
+                <img src={`data:image/png;base64,${props.iconString}`} className="h-6" />
+                <p className="mx-2 self-center normal-case">{props.appName}</p>
+                <p className="mx-1 self-center text-slate-400">
+                    {(time.getMonth() + 1).toString().padStart(2, '0')}/
                     {time.getDate().toString().padStart(2, '0')} {time.getHours().toString().padStart(2, '0')}
                     :{time.getMinutes().toString().padStart(2, '0')}
                 </p>
             </div>
-            <p className="m-1">{props.content}</p>
+            <div>
+                <p className="text-left leading-5 my-1 font-semibold normal-case">{props.title}</p>
+            </div>
+            <p className="text-left leading-4 m-0 normal-case font-normal">{props.content}</p>
         </div>
     );
 }

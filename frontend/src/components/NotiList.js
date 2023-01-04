@@ -1,62 +1,67 @@
 import { useState } from 'react';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import Checkbox from '@mui/material/Checkbox';
+import MuiToggleButton from "@mui/material/ToggleButton";
+import { styled } from "@mui/material/styles";
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { FixedSizeList } from 'react-window';
 import NotiCard from './NotiCard';
 
 export default function NotiList(props) {
-
-  const Rows = () => {
-    const handleToggle = (value) => () => {
-      const currentIndex = props.checked.indexOf(value);
-      const newChecked = [...props.checked];
   
-      if (currentIndex === -1) {
-        newChecked.push(value);
-      } else {
-        newChecked.splice(currentIndex, 1);
-      }
+  const time = new Date(props.snapTime);
+  
+  const ToggleButton = styled(MuiToggleButton)({
+    "&.Mui-selected, &.Mui-selected:hover": {
+      color: "white",
+      backgroundColor: '#aaa'
+    }
+  });
+  
+  const [selectedNotis, setSelectedNotis] = useState(() => []);
+
+  const handleChange = (event, newSelectedNotis) => {
+    setSelectedNotis(newSelectedNotis);
+  };
+
+  const Notis = props.notis.map((value) => 
+    
+    <ToggleButton
+      value={value.notificationId}
+      key={value.notificationId}
+      >
       
-      props.setChecked(newChecked);
-    };
-
-    const renderItems = props.notis.map((value) => 
-      <ListItem key={value.notificationId}>
-        <ListItemButton role={undefined} onClick={handleToggle(value)} dense>
-          <ListItemIcon>
-            <Checkbox
-              edge="start"
-              checked={props.checked.indexOf(value) !== -1}
-              tabIndex={-1}
-              disableRipple
-              inputProps={{ 'aria-labelledby': `checkbox-list-label-${value}` }}
-            />
-          </ListItemIcon>
-          <NotiCard {...value} key={value.notificationId}/>
-        </ListItemButton>
-      </ListItem>
-    ).reverse();
-
-    return renderItems;
-  }
+      <NotiCard {...value} 
+        key={value.notificationId}
+        iconString={props.icons[value.appName]}
+      />
+    </ToggleButton>
+    
+  ).reverse();
 
   return (
+  
+    <div>
+    <Typography variant="h6" className="my-2">
+                您在{(time.getMonth() + 1).toString()}月
+                {time.getDate().toString()}日 {time.getHours().toString().padStart(2, '0')}
+                :{time.getMinutes().toString().padStart(2, '0')} 時之通知列
+    </Typography>
     <Box
-      sx={{ width: '100%', height: 400, maxWidth: 360, bgcolor: 'background.paper' }}
+      sx={{ bgcolor: 'background.paper' }}
+      className="h-[60vh] w-80"
     >
-      <FixedSizeList
-        height={400}
-        width={360}
-        itemSize={40}
-        itemCount={1}
-        overscanCount={3}
+      <ToggleButtonGroup
+        orientation="vertical"
+        color="primary"
+        className="h-full w-full scrollbar"
+        value={selectedNotis}
+        onChange={handleChange}
       >
-        {Rows}
-      </FixedSizeList>
+        {Notis}
+      </ToggleButtonGroup>
     </Box>
+    </div>
   );
 }
 

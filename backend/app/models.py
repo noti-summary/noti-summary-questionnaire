@@ -22,6 +22,8 @@ class Summary(BaseModel):
     esm: Dict[str, Any]
     summary: str
     reason: str
+    longitude: str
+    latitude: str
 
 
 class Questionnaire(BaseModel):
