@@ -99,7 +99,7 @@ export default function Questionnaire(props) {
                 <React.Fragment>
                     {/* main content */}
                     {activeStep !== 0 ?
-                        // step 0
+                        // step 1, 2
                         getStepContent(
                             activeStep, 
                             props.summaryList, 
@@ -108,7 +108,7 @@ export default function Questionnaire(props) {
                             checked, 
                             setChecked
                         ):
-                        // step 1, 2
+                        // step 0
                         (<form onSubmit={handleSubmit(onSubmit)}>
                             <Quest register={register}/>
                             <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
