@@ -61,6 +61,7 @@ export default function Questionnaire(props) {
             console.log({...summaryContent, esm, submitTime, checked});
             const dataURL = `${process.env.NEXT_PUBLIC_SERVER_IP}/summary/${summaryId}`;
             axios.post(dataURL, {...summaryContent, esm, submitTime, selectedNotifications: checked});
+            router.push('/todo');
         }
         else {
             setActiveStep(activeStep + 1);
@@ -131,10 +132,7 @@ export default function Questionnaire(props) {
                                 onClick={handleNext}
                                 sx={{ mt: 3, ml: 1 }}
                             >
-                                {activeStep >= steps.length - 1 ?
-                                    (<Link href="/todo" passHref>送出</Link>) :
-                                    '下一頁'
-                                }
+                                {activeStep >= steps.length - 1 ? '送出' : '下一頁'}
                             </Button>
                         </Box>
                     )}
