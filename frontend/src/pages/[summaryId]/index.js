@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useForm } from "react-hook-form";
 
@@ -31,16 +30,6 @@ export async function getServerSideProps(context) {
 }
 
 const steps = ['step1', 'step2', 'step3'];
-
-// function getStepContent(step, summaryList, icons, summary, setSummary, checked, setChecked) {
-//     switch (step) {
-//       case 2:
-//       case 3: // Link to /todo doesn't trigger immediately
-//         return <ThankText />;
-//       default:
-//         throw new Error('Unknown step');
-//     }
-// }
 
 export default function Questionnaire(props) {
     const router = useRouter();
@@ -99,6 +88,7 @@ export default function Questionnaire(props) {
             <Paper elevation={3} className="self-center py-7 w-fit md:w-[60vw]" sx={{ p: { xs: 2, md: 3 } }}>
                 <React.Fragment>
                     {activeStep === 0 &&
+                    // page 1
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <Quest register={register}/>
                             <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -111,17 +101,24 @@ export default function Questionnaire(props) {
                         </form>
                     }
 
-                    {activeStep === 1 &&
+                    {activeStep >= 1 &&
+                        // page 2, 3
                         <form onSubmit={handleSubmit1(onSubmit1)}>
-                            <div className="flex flex-wrap justify-around">
-                                <NotiList
-                                    notis={props.summaryList.notifications}
-                                    snapTime={props.summaryList.endTime}
-                                    icons={props.icons}
-                                    checked={checked}
-                                    setChecked={setChecked} />
-                                <SummaryTextBox setSummary={setSummary} summary={summaryContent}/>
-                            </div>
+                            {activeStep === 1 ? (
+                                // page 2
+                                <div className="flex flex-wrap justify-around">
+                                    <NotiList
+                                        notis={props.summaryList.notifications}
+                                        snapTime={props.summaryList.endTime}
+                                        icons={props.icons}
+                                        checked={checked}
+                                        setChecked={setChecked} />
+                                    <SummaryTextBox setSummary={setSummary} summary={summaryContent}/>
+                                </div>
+                            ): (
+                                // page 3
+                                <ThankText />
+                            )}
                             <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                                 <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
                                     上一頁
@@ -130,28 +127,12 @@ export default function Questionnaire(props) {
                                     variant="contained"
                                     type="submit"
                                     sx={{ mt: 3, ml: 1 }}
-                                >下一頁</Button>
+                                >
+                                    {activeStep >= steps.length - 1 ? '送出' : '下一頁'}
+                                </Button>
                             </Box>
                         </form>
                     }
-                    {activeStep >= 2 &&
-                        <ThankText />
-                    }
-                    {activeStep !== 0 && activeStep !== 1 && (
-                        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                            <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
-                                上一頁
-                            </Button>
-
-                            <Button
-                                variant="contained"
-                                onClick={handleNext}
-                                sx={{ mt: 3, ml: 1 }}
-                            >
-                                {activeStep >= steps.length - 1 ? '送出' : '下一頁'}
-                            </Button>
-                        </Box>
-                    )}
                 </React.Fragment>
             </Paper>
         </Container>
