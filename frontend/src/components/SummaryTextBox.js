@@ -19,7 +19,7 @@ function SummaryTextBox(props) {
 
     return (
         <div>
-            <Typography variant="h6">
+            <Typography variant="h6" className="my-2">
                 請填寫左側選擇通知之摘要
             </Typography>
             <TextField
@@ -29,8 +29,9 @@ function SummaryTextBox(props) {
                 value={summaryText}
                 onChange={onTextChange}
                 rows={4}
+                className="w-80 max-w-sm"
             />
-            <Typography variant="h6">
+            <Typography variant="h6" className="my-2">
                 摘要這些通知的原因？
             </Typography>
             <TextField
@@ -40,6 +41,7 @@ function SummaryTextBox(props) {
                 value={summaryReason}
                 onChange={onReasonChange}
                 rows={4}
+                className="w-80 max-w-sm"
             />
         </div>
     );

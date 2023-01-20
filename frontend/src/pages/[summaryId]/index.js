@@ -21,21 +21,23 @@ import Button from '@mui/material/Button';
 
 export async function getServerSideProps(context) {
     const {summaryId} = context.query
-    const dataURL = `${process.env.NEXT_PUBLIC_SERVER_IP}/summary/${summaryId}`;
+    const summaryURL = `${process.env.NEXT_PUBLIC_SERVER_IP}/summary/${summaryId}`;
+    const iconURL = `${process.env.NEXT_PUBLIC_SERVER_IP}/summary/appIcons`;
 
-    const response = await axios.get(dataURL);
+    const summaryResponse = await axios.get(summaryURL);
+    const iconResponse = await axios.get(iconURL);
 
-    return { props: {summaryList: response.data} }
+    return { props: {summaryList: summaryResponse.data, icons: iconResponse.data} }
 }
 
 const steps = ['step1', 'step2', 'step3'];
 
-function getStepContent(step, summaryList, summary, setSummary, checked, setChecked) {
+function getStepContent(step, summaryList, icons, summary, setSummary, checked, setChecked) {
     switch (step) {
       case 1:
         return (
-            <div className="grid gap-x-80 grid-cols-2">
-                <NotiList notis={summaryList.notifications} checked={checked} setChecked={setChecked}/>
+            <div className="flex flex-wrap justify-around">
+                <NotiList notis={summaryList.notifications} snapTime={summaryList.endTime} icons={icons} checked={checked} setChecked={setChecked}/>
                 <SummaryTextBox setSummary={setSummary} summary={summary}/>
             </div>
         );
@@ -87,23 +89,24 @@ export default function Questionnaire(props) {
     };
 
     return(
-        <Container component="main">
+        <Container component="main" className="flex flex-col">
             <Typography component="h1" mt={2} variant="h4" align="center">
                 Summary Quest.
             </Typography>
-            <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }} alternativeLabel>
+            <Stepper activeStep={activeStep} className="self-center w-[40vw]" sx={{ pt: 3, pb: 5 }} alternativeLabel>
                 {steps.map((label) => (
                 <Step key={label}><StepLabel></StepLabel></Step>
                 ))}
             </Stepper>
-            <Paper elevation={3} sx={{ p: { xs: 2, md: 3 } }}>
+            <Paper elevation={3} className="self-center py-7 w-fit md:w-[60vw]" sx={{ p: { xs: 2, md: 3 } }}>
                 <React.Fragment>
                     {/* main content */}
                     {activeStep !== 0 ?
                         // step 1, 2
                         getStepContent(
                             activeStep, 
-                            props.summaryList, 
+                            props.summaryList,
+                            props.icons, 
                             summaryContent, 
                             setSummary, 
                             checked, 
@@ -111,7 +114,10 @@ export default function Questionnaire(props) {
                         ):
                         // step 0
                         (<form onSubmit={handleSubmit(onSubmit)}>
-                            <Quest register={register}/>
+                            <Quest
+                                register={register}
+                                longitude={props.summaryList.longitude}
+                                latitude={props.summaryList.latitude}/>
                             <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                                 <Button
                                     variant="contained"

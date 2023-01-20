@@ -23,20 +23,19 @@ function Likert(props) {
         <div>
             {/* <Typography component="h6" mt={2} variant="h6">不同意</Typography> */}
             {/* <FormLabel>不同意</FormLabel> */}
-            <FormControl>
+            <FormControl fullWidth={true}>
                 <Typography component="h6" mt={2} variant="h6">{props.question}</Typography>
                 <RadioGroup
                     row
                     aria-labelledby="demo-row-radio-buttons-group-label"
                     name="row-radio-buttons-group"
+                    className="flex flex-nowrap justify-around"
                 >
-                    <div className="flex">
-                    <FormControlLabel value="-2" control={<Radio />} {...props.reg} label="不同意" labelPlacement="top" />
-                    <FormControlLabel value="-1" control={<Radio />} {...props.reg} label="" labelPlacement="top" />
-                    <FormControlLabel value="0" control={<Radio />} {...props.reg} label="" labelPlacement="top" />
-                    <FormControlLabel value="1" control={<Radio />} {...props.reg} label="" labelPlacement="top" />
-                    <FormControlLabel value="2" control={<Radio />} {...props.reg} label="同意" labelPlacement="top" />
-                    </div>
+                    <FormControlLabel value="-2" control={<Radio />} {...props.reg} label="不同意" labelPlacement="top" className="mx-0" />
+                    <FormControlLabel value="-1" control={<Radio />} {...props.reg} label="" labelPlacement="top" className="mx-0" />
+                    <FormControlLabel value="0" control={<Radio />} {...props.reg} label="" labelPlacement="top" className="mx-0" />
+                    <FormControlLabel value="1" control={<Radio />} {...props.reg} label="" labelPlacement="top" className="mx-0" />
+                    <FormControlLabel value="2" control={<Radio />} {...props.reg} label="同意" labelPlacement="top" className="mx-0" />
                 </RadioGroup>
             </FormControl>
             {/* <FormLabel>同意</FormLabel> */}

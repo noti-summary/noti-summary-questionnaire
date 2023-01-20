@@ -42,6 +42,15 @@ async def get_finish_summary_id(credentials: HTTPBasicCredentials = Depends(secu
     return ids
 
 
+@summary_router.get("/appIcons", response_model=dict)
+async def get_app_icons() -> dict:
+    doc_ref = db.collection(u'appicon').document(u'appicons')
+    doc = await doc_ref.get()
+    doc = doc.to_dict()
+    
+    return doc
+
+
 @summary_router.get("/{summaryId}", response_model=Summary)
 async def get_summary(summaryId: str) -> Summary:
     doc_ref = db.collection(u'summary').document(f'{summaryId}')
