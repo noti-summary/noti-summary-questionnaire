@@ -88,7 +88,7 @@ export default function Questionnaire(props) {
             <Paper elevation={3} className="self-center py-7 w-fit md:w-[60vw]" sx={{ p: { xs: 2, md: 3 } }}>
                 <React.Fragment>
                     {activeStep === 0 &&
-                    // page 1
+                        // page 1
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <Quest register={register}/>
                             <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>

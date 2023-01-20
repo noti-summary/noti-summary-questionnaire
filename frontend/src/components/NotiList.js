@@ -4,7 +4,6 @@ import { styled } from "@mui/material/styles";
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { FixedSizeList } from 'react-window';
 import NotiCard from './NotiCard';
 
 export default function NotiList(props) {
@@ -30,8 +29,7 @@ export default function NotiList(props) {
     <ToggleButton
       value={value}
       key={value.notificationId}
-      >
-      
+    >
       <NotiCard {...value} 
         key={value.notificationId}
         iconString={props.icons[value.appName]}
