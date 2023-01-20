@@ -11,7 +11,7 @@ function MyApp({ Component, pageProps }) {
     <AuthContextProvider>
       <Head>
         <title>Noti-Summary</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/quotation.png" />
       </Head>
       <Navbar />
       <Component {...pageProps} />

@@ -23,7 +23,12 @@ export default function Navbar() {
             sx={{ mr: 2 }}
             onClick={() => router.push('/')}
           >
-            <SmartphoneIcon />
+            <Box
+              component="img"
+              sx={{height: 32}}
+              alt="logo"
+              src="quotation.png"
+            />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Notification Summary
