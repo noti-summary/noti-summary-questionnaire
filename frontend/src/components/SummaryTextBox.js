@@ -5,7 +5,7 @@ import TextField from "@mui/material/TextField";
 import Typography from '@mui/material/Typography';
 
 function SummaryTextBox(props) {
-    const [summaryText, setSummaryText] = useState(props.summary.text);
+    const [summaryText, setSummaryText] = useState(props.summary.summary);
     const [summaryReason, setSummaryReason] = useState(props.summary.reason);
     const onTextChange = (e) => {
         setSummaryText(e.target.value)
