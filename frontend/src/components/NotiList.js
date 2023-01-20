@@ -22,12 +22,13 @@ export default function NotiList(props) {
 
   const handleChange = (event, newSelectedNotis) => {
     setSelectedNotis(newSelectedNotis);
+    console.log(newSelectedNotis);
   };
 
   const Notis = props.notis.map((value) => 
     
     <ToggleButton
-      value={value.notificationId}
+      value={value}
       key={value.notificationId}
       >
       

@@ -12,9 +12,9 @@ function NotiCard(props) {
                 </p>
             </div>
             <div>
-                <p className="text-left leading-5 my-1 font-semibold normal-case">{props.title}</p>
+                <p className="text-left leading-5 my-1 font-semibold normal-case break-words">{props.title}</p>
             </div>
-            <p className="text-left leading-4 m-0 normal-case font-normal">{props.content}</p>
+            <p className="text-left leading-4 m-0 normal-case font-normal break-words">{props.content}</p>
         </div>
     );
 }
