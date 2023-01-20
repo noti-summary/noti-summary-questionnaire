@@ -30,6 +30,7 @@ function SummaryTextBox(props) {
                 onChange={onTextChange}
                 rows={4}
                 className="w-80 max-w-sm"
+                required
             />
             <Typography variant="h6" className="my-2">
                 摘要這些通知的原因？
@@ -42,6 +43,7 @@ function SummaryTextBox(props) {
                 onChange={onReasonChange}
                 rows={4}
                 className="w-80 max-w-sm"
+                required
             />
         </div>
     );
