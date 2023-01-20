@@ -7,25 +7,26 @@ import Box from '@mui/material/Box';
 import NotiCard from './NotiCard';
 
 export default function NotiList(props) {
-  
+
   const time = new Date(props.snapTime);
-  
+
   const ToggleButton = styled(MuiToggleButton)({
     "&.Mui-selected, &.Mui-selected:hover": {
       color: "white",
       backgroundColor: '#aaa'
     }
   });
-  
-  const [selectedNotis, setSelectedNotis] = useState(() => []);
 
-  const handleChange = (event, newSelectedNotis) => {
+  const [selectedNotis, setSelectedNotis] = useState(props.checked);
+
+  const handleChange = (_, newSelectedNotis) => {
     setSelectedNotis(newSelectedNotis);
     console.log(newSelectedNotis);
+    props.setChecked(newSelectedNotis);
   };
 
   const Notis = props.notis.map((value) => 
-    
+
     <ToggleButton
       value={value}
       key={value.notificationId}
@@ -35,31 +36,30 @@ export default function NotiList(props) {
         iconString={props.icons[value.appName]}
       />
     </ToggleButton>
-    
+
   ).reverse();
 
   return (
-  
     <div>
-    <Typography variant="h6" className="my-2">
-                您在{(time.getMonth() + 1).toString()}月
-                {time.getDate().toString()}日 {time.getHours().toString().padStart(2, '0')}
-                :{time.getMinutes().toString().padStart(2, '0')} 時之通知列
-    </Typography>
-    <Box
-      sx={{ bgcolor: 'background.paper' }}
-      className="h-[60vh] w-80"
-    >
-      <ToggleButtonGroup
-        orientation="vertical"
-        color="primary"
-        className="h-full w-full scrollbar"
-        value={selectedNotis}
-        onChange={handleChange}
+      <Typography variant="h6" className="my-2">
+                  您在{(time.getMonth() + 1).toString()}月
+                  {time.getDate().toString()}日 {time.getHours().toString().padStart(2, '0')}
+                  :{time.getMinutes().toString().padStart(2, '0')} 時之通知列
+      </Typography>
+      <Box
+        sx={{ bgcolor: 'background.paper' }}
+        className="h-[60vh] w-80"
       >
-        {Notis}
-      </ToggleButtonGroup>
-    </Box>
+        <ToggleButtonGroup
+          orientation="vertical"
+          color="primary"
+          className="h-full w-full scrollbar"
+          value={selectedNotis}
+          onChange={handleChange}
+        >
+          {Notis}
+        </ToggleButtonGroup>
+      </Box>
     </div>
   );
 }
