@@ -17,11 +17,7 @@ export default function NotiList(props) {
     }
   });
 
-  const [selectedNotis, setSelectedNotis] = useState(props.checked);
-
   const handleChange = (_, newSelectedNotis) => {
-    setSelectedNotis(newSelectedNotis);
-    console.log(newSelectedNotis);
     props.setChecked(newSelectedNotis);
   };
 
@@ -54,7 +50,7 @@ export default function NotiList(props) {
           orientation="vertical"
           color="primary"
           className="h-full w-full scrollbar"
-          value={selectedNotis}
+          value={props.checked}
           onChange={handleChange}
         >
           {Notis}
