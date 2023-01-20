@@ -61,7 +61,10 @@ export default function Questionnaire(props) {
         'reason': ''
     });
 
-    const [esm, setEsm] = useState({});
+    const [esm, setEsm] = useState({
+        'q1': '',
+        'q2': ''
+    });
 
     const { register, handleSubmit } = useForm();
     const onSubmit = (data) => {
@@ -90,7 +93,7 @@ export default function Questionnaire(props) {
                     {activeStep === 0 &&
                         // page 1
                         <form onSubmit={handleSubmit(onSubmit)}>
-                            <Quest register={register}/>
+                            <Quest register={register} defaultValue={esm}/>
                             <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                                 <Button
                                     variant="contained"
