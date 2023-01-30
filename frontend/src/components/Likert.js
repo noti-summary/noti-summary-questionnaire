@@ -8,7 +8,10 @@ function Likert(props) {
     return (
         <div>
             <FormControl fullWidth={true}>
-                <Typography component="h6" mt={2} variant="h6">{props.question}</Typography>
+                <Typography component="h6" mt={2} variant="h6">
+                    {props.question}
+                    {props.required && <span className="text-red-500">*</span>}
+                </Typography>
                 <RadioGroup
                     row
                     defaultValue={props.defaultValue}
@@ -18,7 +21,7 @@ function Likert(props) {
                 >
                     <FormControlLabel
                         value="-2"
-                        control={<Radio required={true} />}
+                        control={<Radio required={props.required} />}
                         {...props.reg}
                         label="不同意"
                         labelPlacement="top"

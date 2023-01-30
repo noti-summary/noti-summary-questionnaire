@@ -20,6 +20,7 @@ function SummaryTextBox(props) {
         <div>
             <Typography variant="h6" className="my-2">
                 請填寫左側選擇通知之摘要
+                <span className="text-red-500">*</span>
             </Typography>
             <TextField
                 id="outlined-textarea"
@@ -33,6 +34,7 @@ function SummaryTextBox(props) {
             />
             <Typography variant="h6" className="my-2">
                 摘要這些通知的原因？
+                <span className="text-red-500">*</span>
             </Typography>
             <TextField
                 id="outlined-textarea"
