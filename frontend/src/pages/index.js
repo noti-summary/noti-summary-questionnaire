@@ -7,12 +7,13 @@ export default function Home() {
   return (
     <div className={styles.container}>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Notification Summary
-        </h1>
+      <main className={`${styles.main} self-center`}>
+        <h2 className={`${styles.title} tracking-widest`}>通知摘要研究問卷</h2>
+        <div className="flex flex-row self-center w-[35em] justify-between">
+          {[..."探究智慧型手機使用者對於通知之理想摘要方式"].map((char) => <p className="my-0 text-xl">{char}</p>)}
+        </div>
         
-        <Link href="/login" passHref>
+        <Link href="/login" className="my-4" passHref>
           <Button variant="contained" size="large">登入</Button>
         </Link>
       </main>

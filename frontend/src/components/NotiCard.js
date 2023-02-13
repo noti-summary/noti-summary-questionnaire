@@ -5,7 +5,7 @@ function NotiCard(props) {
             <div className="flex flex-row content-center h-6 w-full">
                 <img src={`data:image/png;base64,${props.iconString}`} className="h-6" />
                 <p className="mx-2 self-center normal-case">{props.appName}</p>
-                <p className="mx-1 self-center text-slate-400">
+                <p className="mx-1 self-center">
                     {(time.getMonth() + 1).toString().padStart(2, '0')}/
                     {time.getDate().toString().padStart(2, '0')} {time.getHours().toString().padStart(2, '0')}
                     :{time.getMinutes().toString().padStart(2, '0')}

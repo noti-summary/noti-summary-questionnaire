@@ -64,8 +64,8 @@ export default function Login() {
 
     return(
         // <div className={styles.container}>
-        <Container component="main">
-            <Paper elevation={3} sx={{ p: { xs: 2, md: 3 } }}>
+        <Container component="main" className="w-fit">
+            <Paper elevation={3} sx={{p: { xs: 2, md: 3 }}} className="w-auto">
                 <QRCode token={accessToken} />
             </Paper>
         </Container>

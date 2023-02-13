@@ -10,7 +10,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <AuthContextProvider>
       <Head>
-        <title>Noti-Summary</title>
+        <title>通知摘要研究問卷</title>
         <link rel="icon" href="/quotation.png" />
       </Head>
       <Navbar />
