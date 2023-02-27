@@ -80,15 +80,15 @@ export default function Questionnaire(props) {
 
     return(
         <Container component="main" className="flex flex-col">
-            <Typography component="h1" mt={2} variant="h4" align="center">
+            <Typography component="h1" mt={2} variant="h4" align="center" sx={{ pt: 1 }}>
                 Summary Quest.
             </Typography>
-            <Stepper activeStep={activeStep} className="self-center w-[40vw]" sx={{ pt: 3, pb: 5 }} alternativeLabel>
+            <Stepper activeStep={activeStep} className="self-center w-[40vw]" sx={{ pt: 2, pb: 3 }} alternativeLabel>
                 {steps.map((label) => (
                 <Step key={label}><StepLabel></StepLabel></Step>
                 ))}
             </Stepper>
-            <Paper elevation={3} className="self-center py-7 w-fit md:w-[60vw]" sx={{ p: { xs: 2, md: 3 } }}>
+            <Paper elevation={3} className="self-center py-7 w-fit md:w-[60vw]" sx={{ p: { xs: 2, md: 3 }, mb: { xs: 3, md: 4 } }}>
                 <React.Fragment>
                     {activeStep === 0 &&
                         // page 1

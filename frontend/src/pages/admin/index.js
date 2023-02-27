@@ -49,12 +49,13 @@ export default function Admin() {
 
 
     return(
-        <div>
+        <div className="p-3">
             <Box
                 component="form"
                 onSubmit={handleSubmit}
                 sx={{'& .MuiTextField-root': { m: 1, width: '25ch' },}}
                 autoComplete="on"
+                className="w-6/12 grid grid-cols-3 place-items-center py-2 pl-5 space-x-20"
             >
                 <TextField
                     required
@@ -75,7 +76,6 @@ export default function Admin() {
 
                 <Button variant="contained" endIcon={<SendIcon/>} type="submit">Search</Button> 
             </Box>
-
 
             <h2>已完成摘要問卷</h2>
 
