@@ -1,6 +1,6 @@
 import firebase_admin
 from firebase_admin import credentials
-from firebase_admin import firestore
+from firebase_admin import firestore_async
 from dotenv import load_dotenv
 import os
 
@@ -20,4 +20,4 @@ cred = credentials.Certificate({
 })
 
 firebase_admin.initialize_app(cred)
-db = firestore.client()
+db = firestore_async.client()

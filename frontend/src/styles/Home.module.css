@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap');
+
 .container {
   padding: 0 2rem;
 }
@@ -43,6 +45,7 @@
   margin: 0;
   line-height: 1.15;
   font-size: 4rem;
+  font-family: 'Roboto Slab';
 }
 
 .title,

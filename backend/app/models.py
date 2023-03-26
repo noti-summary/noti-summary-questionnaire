@@ -26,7 +26,7 @@ class Summary(BaseModel):
 
 class Questionnaire(BaseModel):
     submitTime: str
-    # selectedNotifications: list[Notification]
+    selectedNotifications: list[Notification]
     esm: Dict[str, Any]
     summary: str
     reason: str

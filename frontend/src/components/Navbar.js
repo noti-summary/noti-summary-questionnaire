@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import SmartphoneIcon from '@mui/icons-material/Smartphone';
 import { useRouter } from "next/router";
 
-export default function Bar() {
+export default function Navbar() {
 
   const router = useRouter();
 
@@ -23,7 +23,12 @@ export default function Bar() {
             sx={{ mr: 2 }}
             onClick={() => router.push('/')}
           >
-            <SmartphoneIcon />
+            <Box
+              component="img"
+              sx={{height: 32}}
+              alt="logo"
+              src="quotation.png"
+            />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Notification Summary

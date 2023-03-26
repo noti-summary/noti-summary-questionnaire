@@ -1,11 +1,10 @@
-import { useForm } from "react-hook-form";
 import { useState } from "react";
 
 import TextField from "@mui/material/TextField";
 import Typography from '@mui/material/Typography';
 
 function SummaryTextBox(props) {
-    const [summaryText, setSummaryText] = useState(props.summary.text);
+    const [summaryText, setSummaryText] = useState(props.summary.summary);
     const [summaryReason, setSummaryReason] = useState(props.summary.reason);
     const onTextChange = (e) => {
         setSummaryText(e.target.value)
@@ -19,8 +18,9 @@ function SummaryTextBox(props) {
 
     return (
         <div>
-            <Typography variant="h6">
+            <Typography variant="h6" className="my-2">
                 請填寫左側選擇通知之摘要
+                <span className="text-red-500">*</span>
             </Typography>
             <TextField
                 id="outlined-textarea"
@@ -29,9 +29,12 @@ function SummaryTextBox(props) {
                 value={summaryText}
                 onChange={onTextChange}
                 rows={4}
+                className="w-80 max-w-sm"
+                required
             />
-            <Typography variant="h6">
+            <Typography variant="h6" className="my-2">
                 摘要這些通知的原因？
+                <span className="text-red-500">*</span>
             </Typography>
             <TextField
                 id="outlined-textarea"
@@ -40,6 +43,8 @@ function SummaryTextBox(props) {
                 value={summaryReason}
                 onChange={onReasonChange}
                 rows={4}
+                className="w-80 max-w-sm"
+                required
             />
         </div>
     );

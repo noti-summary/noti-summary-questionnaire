@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
-import NotiList from '../../../components/notilist';
+import NotiList from '../../../components/NotiList';
 
 
 export async function getServerSideProps(context) {

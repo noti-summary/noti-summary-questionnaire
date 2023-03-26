@@ -3,17 +3,17 @@ import Head from 'next/head'
 import '../styles/globals.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { AuthContextProvider } from '../components/context/authContext';
-import Bar from '../components/appBar';
+import { AuthContextProvider } from '../components/context/AuthContext';
+import Navbar from '../components/Navbar';
 
 function MyApp({ Component, pageProps }) {
   return (
     <AuthContextProvider>
       <Head>
-        <title>Noti-Summary</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>通知摘要研究問卷</title>
+        <link rel="icon" href="/quotation.png" />
       </Head>
-      <Bar />
+      <Navbar />
       <Component {...pageProps} />
       <ToastContainer />
     </AuthContextProvider>

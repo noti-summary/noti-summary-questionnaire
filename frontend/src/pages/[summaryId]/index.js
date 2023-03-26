@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useForm } from "react-hook-form";
 
@@ -21,47 +20,36 @@ import Button from '@mui/material/Button';
 
 export async function getServerSideProps(context) {
     const {summaryId} = context.query
-    const dataURL = `${process.env.NEXT_PUBLIC_SERVER_IP}/summary/${summaryId}`;
+    const summaryURL = `${process.env.NEXT_PUBLIC_SERVER_IP}/summary/${summaryId}`;
+    const iconURL = `${process.env.NEXT_PUBLIC_SERVER_IP}/summary/appIcons`;
 
-    const response = await axios.get(dataURL);
+    const summaryResponse = await axios.get(summaryURL);
+    const iconResponse = await axios.get(iconURL);
 
-    return { props: {summaryList: response.data} }
+    return { props: {summaryList: summaryResponse.data, icons: iconResponse.data} }
 }
 
 const steps = ['step1', 'step2', 'step3'];
-
-function getStepContent(step, summaryList,
-                        summary, setSummary) {
-    switch (step) {
-      case 1:
-        return (
-            <div className="grid gap-x-80 grid-cols-2">
-                <NotiList notis={summaryList.notifications}/>
-                <SummaryTextBox setSummary={setSummary} summary={summary}/>
-            </div>
-        );
-      case 2:
-      case 3: // Link to /todo doesn't trigger immediately
-        return <ThankText />;
-      default:
-        throw new Error('Unknown step');
-    }
-}
 
 export default function Questionnaire(props) {
     const router = useRouter();
     const { summaryId } = router.query;
 
+    const [checked, setChecked] = useState([]);
+
     const [activeStep, setActiveStep] = useState(0);
 
     const handleNext = () => {
-        if (activeStep === steps.length - 1) {
+        if (activeStep >= steps.length - 1) {
             const submitTime = new Date().toISOString().substring(0, 19);
-            console.log({...summaryContent, esm, submitTime});
+            console.log({...summaryContent, esm, submitTime, checked});
             const dataURL = `${process.env.NEXT_PUBLIC_SERVER_IP}/summary/${summaryId}`;
-            axios.post(dataURL, {...summaryContent, esm, submitTime});
+            axios.post(dataURL, {...summaryContent, esm, submitTime, selectedNotifications: checked});
+            router.push('/todo');
         }
-        setActiveStep(activeStep + 1);
+        else {
+            setActiveStep(activeStep + 1);
+        }
     };
 
     const handleBack = () => {
@@ -73,7 +61,10 @@ export default function Questionnaire(props) {
         'reason': ''
     });
 
-    const [esm, setEsm] = useState({});
+    const [esm, setEsm] = useState({
+        'q1': '',
+        'q2': ''
+    });
 
     const { register, handleSubmit } = useForm();
     const onSubmit = (data) => {
@@ -82,26 +73,27 @@ export default function Questionnaire(props) {
         handleNext();
     };
 
+    const { handleSubmit: handleSubmit1 } = useForm();
+    const onSubmit1 = (_) => {
+        handleNext();
+    };
+
     return(
-        <Container component="main">
-            <Typography component="h1" mt={2} variant="h4" align="center">
+        <Container component="main" className="flex flex-col">
+            <Typography component="h1" mt={2} variant="h4" align="center" sx={{ pt: 1 }}>
                 Summary Quest.
             </Typography>
-            <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }} alternativeLabel>
+            <Stepper activeStep={activeStep} className="self-center w-[40vw]" sx={{ pt: 2, pb: 3 }} alternativeLabel>
                 {steps.map((label) => (
                 <Step key={label}><StepLabel></StepLabel></Step>
                 ))}
             </Stepper>
-            <Paper elevation={3} sx={{ p: { xs: 2, md: 3 } }}>
+            <Paper elevation={3} className="self-center py-7 w-fit md:w-[60vw]" sx={{ p: { xs: 2, md: 3 }, mb: { xs: 3, md: 4 } }}>
                 <React.Fragment>
-                    {/* main content */}
-                    {activeStep !== 0 ?
-                        // step 0
-                        getStepContent(activeStep, props.summaryList,
-                                       summaryContent, setSummary) :
-                        // step 1, 2
-                        (<form onSubmit={handleSubmit(onSubmit)}>
-                            <Quest register={register}/>
+                    {activeStep === 0 &&
+                        // page 1
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                            <Quest register={register} defaultValue={esm}/>
                             <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                                 <Button
                                     variant="contained"
@@ -109,26 +101,41 @@ export default function Questionnaire(props) {
                                     sx={{ mt: 3, ml: 1 }}
                                 >下一頁</Button>
                             </Box>
-                        </form>)
+                        </form>
                     }
-                    {activeStep !== 0 && (
-                        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                            <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
-                                上一頁
-                            </Button>
 
-                            <Button
-                                variant="contained"
-                                onClick={handleNext}
-                                sx={{ mt: 3, ml: 1 }}
-                            >
-                                {activeStep >= steps.length - 1 ?
-                                    (<Link href="/todo" passHref>送出</Link>) :
-                                    '下一頁'
-                                }
-                            </Button>
-                        </Box>
-                    )}
+                    {activeStep >= 1 &&
+                        // page 2, 3
+                        <form onSubmit={handleSubmit1(onSubmit1)}>
+                            {activeStep === 1 ? (
+                                // page 2
+                                <div className="flex flex-wrap justify-around">
+                                    <NotiList
+                                        notis={props.summaryList.notifications}
+                                        snapTime={props.summaryList.endTime}
+                                        icons={props.icons}
+                                        checked={checked}
+                                        setChecked={setChecked} />
+                                    <SummaryTextBox setSummary={setSummary} summary={summaryContent}/>
+                                </div>
+                            ): (
+                                // page 3
+                                <ThankText />
+                            )}
+                            <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
+                                    上一頁
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    type="submit"
+                                    sx={{ mt: 3, ml: 1 }}
+                                >
+                                    {activeStep >= steps.length - 1 ? '送出' : '下一頁'}
+                                </Button>
+                            </Box>
+                        </form>
+                    }
                 </React.Fragment>
             </Paper>
         </Container>

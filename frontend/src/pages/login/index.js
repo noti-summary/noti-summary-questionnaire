@@ -2,8 +2,8 @@ import { useState, useEffect, useContext } from 'react';
 import { useRouter } from "next/router";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { AuthContext } from '../../components/context/authContext';
-import QRCode from '../../components/qrcode';
+import { AuthContext } from '../../components/context/AuthContext';
+import QRCode from '../../components/QRCode';
 
 import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
@@ -64,8 +64,8 @@ export default function Login() {
 
     return(
         // <div className={styles.container}>
-        <Container component="main">
-            <Paper elevation={3} sx={{ p: { xs: 2, md: 3 } }}>
+        <Container component="main" className="w-fit">
+            <Paper elevation={3}  sx={{p: { xs: 2, md: 3 }, m: { xs: 3, md: 6 }}} className="w-auto">
                 <QRCode token={accessToken} />
             </Paper>
         </Container>
